@@ -4,11 +4,12 @@ const { omit } = require('ramda');
 const loaderMerge = require('@neutrinojs/loader-merge');
 
 module.exports = (neutrino, opts = {}) => {
-  neutrino.on('test', ({ files }) => {
+  neutrino.on('test', ({ files, watch }) => {
     const usingBabel = neutrino.config.module.rules.has('compile');
     const options = merge.all([
       { reporter: 'spec', ui: 'tdd', bail: true },
       opts,
+      { watch },
       files && files.length ? { recursive: true } : {}
     ]);
 
